@@ -114,7 +114,6 @@ function Database(name){
     if(docs.total_rows<=0){
       const {data, versionCode} = await APIConn.setData()
       docs = data
-      versionCode = versionCode
       await setData(docs, versionCode, 'insert')
     }
   }
@@ -133,7 +132,7 @@ function Database(name){
     if (versionCodeAPI > versionCodeDB){
       const { data } = await APIConn.setData(true, false)
       docs = data
-      update(docs, versionCodeAPI)
+      await update(docs, versionCodeAPI)
     }
   }
   return{ migration, checkUpdate, getAllDocs}
